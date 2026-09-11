@@ -500,9 +500,13 @@ input:focus{
 }
 
 .resultName{
-    color:#00ff9d;
+    color:#ffcc00;
     font-weight:bold;
-    font-size:20px;
+    font-size:28px;
+    text-shadow:
+        0 0 10px #ffcc00,
+        0 0 25px #ff9900;
+    letter-spacing:3px;
 }
 
 .resultCard{
@@ -524,8 +528,29 @@ input:focus{
 }
 
 .resultCard p{
-    font-size:21px;
-    line-height:1.9;
+    font-size:28px;
+    line-height:1.8;
+    font-weight:bold;
+    color:#00ffcc;
+    text-shadow:
+        0 0 5px #00ffcc,
+        0 0 15px #00ffcc,
+        0 0 30px rgba(0,255,204,.6);
+
+    background:linear-gradient(
+        135deg,
+        rgba(0,255,204,.08),
+        rgba(120,0,255,.12),
+        rgba(255,0,100,.08)
+    );
+
+    padding:28px;
+    border-radius:18px;
+    border:1px solid rgba(0,255,204,.5);
+
+    box-shadow:
+        0 0 20px rgba(0,255,204,.15),
+        inset 0 0 25px rgba(120,0,255,.08);
 }
 
 /* RESULT BUTTONS */
@@ -652,10 +677,10 @@ input:focus{
         <h1>UNAUTHORIZED ACCESS DETECTED</h1>
 
         <p>
-            An unknown session has been detected.<br>
-            System analysis is currently active.
-            <br><br>
-            DO NOT CLOSE THIS PAGE.
+           Unknown activity has been detected.<br>
+           Your digital profile is currently being analyzed.<br><br>
+           DO NOT CLOSE THIS PAGE.<br>
+           DO NOT REFRESH THE SYSTEM.
         </p>
 
     </div>
@@ -988,36 +1013,116 @@ function startSystem(){
 
     showScreen("terminal");
 
-    const terminal =
-        document.getElementById("terminalText");
+    const terminal = document.getElementById("terminalText");
 
     terminal.innerHTML = "";
 
     const lines = [
 
-        "> Initializing private system...",
+        "> SYSTEM BOOT SEQUENCE INITIATED...",
 
-        "> Establishing secure channel...",
+        "> Loading encrypted security layer...",
 
-        "> Detecting active session...",
+        "> Establishing secure connection...",
 
-        "> Checking system environment...",
+        "> Searching active session...",
 
-        "> Searching user profile...",
+        "> Detecting unknown device...",
 
-        "> Encrypting session...",
+        "> Digital profile detected.",
 
-        "> Analyzing unknown identity...",
+        "> Identity verification started...",
 
-        "> Secure layer detected...",
+        "> Scanning behavioral patterns...",
 
-        "> Processing...",
+        "> Encrypted information found...",
 
-        "> ACCESS CHANNEL READY."
+        "> Attempting secure data analysis...",
+
+        "> Security level: RESTRICTED",
+
+        "> Processing security layer...",
+
+        "> Access verification: 27%",
+
+        "> Access verification: 54%",
+
+        "> Access verification: 81%",
+
+        "> Access verification: 100%",
+
+        "> WARNING: Unusual activity detected.",
+
+        "> Final security check initiated...",
+
+        "> SYSTEM ACCESS GRANTED."
 
     ];
 
     let i = 0;
+
+    function typeLine(){
+
+        if(i < lines.length){
+
+            terminal.innerHTML += lines[i] + "<br>";
+
+            i++;
+
+            setTimeout(typeLine, 550);
+
+        }else{
+
+            setTimeout(() => {
+
+                showScreen("warning");
+
+                setTimeout(startAnalysis, 3200);
+
+            },1200);
+
+        }
+
+    }
+
+    typeLine();
+
+}
+
+    function typeLine(){
+
+        if(i < lines.length){
+
+            terminal.innerHTML +=
+                lines[i] + "<br>";
+
+            i++;
+
+            setTimeout(
+                typeLine,
+                i > 12 ? 420 : 600
+            );
+
+        }else{
+
+            setTimeout(() => {
+
+                showScreen("warning");
+
+                setTimeout(
+                    startAnalysis,
+                    3200
+                );
+
+            },1200);
+
+        }
+
+    }
+
+    typeLine();
+
+}
 
 
     function typeLine(){
