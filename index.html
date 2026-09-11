@@ -1,0 +1,1631 @@
+ ```html
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIME SYSTEM</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
+}
+
+.screen{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.screen.active{
+    display:flex;
+}
+
+/* HOME */
+
+#home{
+    background:radial-gradient(circle at center,#161616,#050505 55%,#000);
+}
+
+.home{
+    text-align:center;
+}
+
+.home small{
+    color:#666;
+    letter-spacing:7px;
+    font-family:monospace;
+}
+
+.home h1{
+    margin:25px 0;
+    font-size:clamp(30px,6vw,65px);
+    letter-spacing:5px;
+}
+
+.click{
+    width:220px;
+    height:70px;
+    border-radius:12px;
+    border:1px solid #ff3030;
+    background:#b40000;
+    color:#fff;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 25px rgba(255,0,0,.5);
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        box-shadow:0 0 55px rgba(255,0,0,.9);
+        transform:scale(1.04);
+    }
+}
+
+/* TERMINAL */
+
+#terminal{
+    background:#000;
+    justify-content:flex-start;
+    align-items:flex-start;
+}
+
+.terminal{
+    width:100%;
+    height:100%;
+    padding:35px;
+    color:#00ff66;
+    font-family:monospace;
+    font-size:15px;
+    line-height:1.8;
+}
+
+.cursor{
+    display:inline-block;
+    width:9px;
+    height:18px;
+    background:#00ff66;
+    animation:blink .5s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0}
+}
+
+/* WARNING */
+
+#warning{
+    background:#080000;
+}
+
+.warning{
+    width:min(700px,95%);
+    padding:45px 25px;
+    text-align:center;
+    border:1px solid red;
+    box-shadow:0 0 70px rgba(255,0,0,.35);
+    animation:shake .15s infinite;
+}
+
+.warning .icon{
+    font-size:70px;
+}
+
+.warning h1{
+    color:#ff2020;
+    margin:20px 0;
+    font-size:32px;
+}
+
+.warning p{
+    color:#aaa;
+    line-height:1.8;
+}
+
+@keyframes shake{
+    0%{transform:translate(0)}
+    25%{transform:translate(3px,-2px)}
+    50%{transform:translate(-3px,2px)}
+    75%{transform:translate(2px,2px)}
+}
+
+/* ANALYSIS */
+
+#analysis{
+    background:#020202;
+}
+
+.analysis{
+    width:min(650px,95%);
+}
+
+.analysis h2{
+    color:#00ff66;
+    font-family:monospace;
+    margin-bottom:25px;
+}
+
+.bar{
+    height:18px;
+    background:#111;
+    border:1px solid #333;
+}
+
+.bar span{
+    display:block;
+    height:100%;
+    width:0;
+    background:#00ff66;
+    box-shadow:0 0 20px #00ff66;
+}
+
+.percent{
+    margin-top:10px;
+    text-align:right;
+    color:#00ff66;
+    font-family:monospace;
+}
+
+.logs{
+    margin-top:25px;
+    color:#777;
+    font-family:monospace;
+    line-height:1.8;
+}
+
+/* OPTIONS */
+
+#options{
+    background:radial-gradient(circle at center,#171717,#020202 75%);
+}
+
+.options{
+    width:min(900px,95%);
+    text-align:center;
+}
+
+.options h1{
+    font-size:34px;
+    margin-bottom:12px;
+}
+
+.options>p{
+    color:#777;
+    margin-bottom:35px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.card{
+    padding:42px 25px;
+    border:1px solid #333;
+    background:rgba(255,255,255,.04);
+    border-radius:20px;
+    transition:.35s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    border-color:#888;
+    box-shadow:0 20px 60px rgba(255,255,255,.08);
+}
+
+.card .emoji{
+    font-size:60px;
+}
+
+.card h2{
+    margin:18px 0 12px;
+}
+
+.card p{
+    color:#888;
+    line-height:1.6;
+    margin-bottom:25px;
+}
+
+.card button{
+    padding:14px 28px;
+    border-radius:10px;
+    border:0;
+    background:#fff;
+    color:#111;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* FORM */
+
+.form{
+    width:min(520px,95%);
+    text-align:center;
+}
+
+.form .emoji{
+    font-size:70px;
+}
+
+.form h1{
+    margin:20px 0 12px;
+    font-size:30px;
+}
+
+.form p{
+    color:#777;
+    margin-bottom:30px;
+}
+
+input{
+    width:100%;
+    padding:18px;
+    background:#0d0d0d;
+    border:1px solid #444;
+    border-radius:10px;
+    color:#fff;
+    outline:none;
+    font-size:17px;
+}
+
+input:focus{
+    border-color:#aaa;
+}
+
+.show{
+    width:100%;
+    padding:17px;
+    margin-top:17px;
+    border-radius:10px;
+    border:0;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.back{
+    margin-top:15px;
+    padding:10px 20px;
+    color:#777;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+}
+
+/* FUTURE TRAVEL */
+
+#futureTravel{
+    background:#000;
+    overflow:hidden;
+}
+
+.space{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+}
+
+.star{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:white;
+    border-radius:50%;
+    animation:starMove 1.2s linear infinite;
+}
+
+@keyframes starMove{
+    from{
+        transform:translateZ(0) scale(.2);
+        opacity:.2;
+    }
+
+    to{
+        transform:translateZ(0) scale(8);
+        opacity:0;
+    }
+}
+
+.tunnel{
+    position:absolute;
+    width:100px;
+    height:100px;
+    border:2px solid #6b8cff;
+    border-radius:50%;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 30px #4567ff,0 0 80px #4567ff;
+    animation:tunnel 1s linear infinite;
+}
+
+@keyframes tunnel{
+    from{
+        width:80px;
+        height:80px;
+        opacity:1;
+    }
+
+    to{
+        width:1500px;
+        height:1500px;
+        opacity:0;
+    }
+}
+
+.futureContent{
+    position:relative;
+    z-index:5;
+    text-align:center;
+}
+
+.countdown{
+    font-size:120px;
+    font-weight:bold;
+    text-shadow:0 0 40px #fff;
+}
+
+.travelText{
+    font-family:monospace;
+    color:#aaa;
+    font-size:18px;
+    margin-top:20px;
+}
+
+.year{
+    margin-top:25px;
+    font-size:50px;
+    font-weight:bold;
+    color:#70a0ff;
+    text-shadow:0 0 35px #4174ff;
+}
+
+.futureEarth{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    margin:25px auto;
+    background:radial-gradient(
+        circle at 35% 30%,
+        #bff,
+        #246cff 35%,
+        #03102d 70%
+    );
+    box-shadow:
+        0 0 30px #2770ff,
+        0 0 90px rgba(50,110,255,.7);
+    animation:earthSpin 2s linear infinite;
+}
+
+@keyframes earthSpin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.destination{
+    font-size:35px;
+    color:#00ffae;
+    text-shadow:0 0 30px #00ffae;
+    display:none;
+}
+
+/* MIND SCAN */
+
+#mindScan{
+    background:radial-gradient(circle,#111,#000 70%);
+}
+
+.mind{
+    text-align:center;
+    width:min(650px,95%);
+}
+
+.brain{
+    font-size:100px;
+    filter:drop-shadow(0 0 30px #9b59ff);
+    animation:brainPulse 1s infinite;
+}
+
+@keyframes brainPulse{
+    50%{
+        transform:scale(1.12);
+        filter:drop-shadow(0 0 60px #b47cff);
+    }
+}
+
+.scanRing{
+    width:230px;
+    height:230px;
+    border:2px solid #a86cff;
+    border-radius:50%;
+    margin:-165px auto 60px;
+    animation:scan 1.5s linear infinite;
+}
+
+@keyframes scan{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.mind h2{
+    font-family:monospace;
+    color:#c89cff;
+}
+
+.mindPercent{
+    margin-top:20px;
+    font-family:monospace;
+    color:#c89cff;
+}
+
+/* RESULT */
+
+#result{
+    background:radial-gradient(circle at center,#181818,#000 75%);
+}
+
+.result{
+    width:min(760px,95%);
+    text-align:center;
+}
+
+.resultTop{
+    color:#777;
+    letter-spacing:5px;
+    font-size:12px;
+}
+
+.result h1{
+    margin:18px 0;
+    font-size:38px;
+}
+
+.resultName{
+    color:#00ff9d;
+    font-weight:bold;
+    font-size:20px;
+}
+
+.resultCard{
+    margin-top:25px;
+    padding:40px 28px;
+    border:1px solid #333;
+    border-radius:20px;
+    background:rgba(255,255,255,.04);
+    box-shadow:0 20px 80px rgba(0,0,0,.7);
+}
+
+.resultCard .badge{
+    display:inline-block;
+    padding:8px 15px;
+    border-radius:20px;
+    background:#111;
+    color:#aaa;
+    margin-bottom:20px;
+}
+
+.resultCard p{
+    font-size:21px;
+    line-height:1.9;
+}
+
+/* RESULT BUTTONS */
+
+.resultButtons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:25px;
+}
+
+.restart{
+    padding:15px 28px;
+    border-radius:10px;
+    border:0;
+    background:#fff;
+    color:#111;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.optionBack{
+    padding:15px 28px;
+    border-radius:10px;
+    border:1px solid #555;
+    background:#111;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.optionBack:hover{
+    background:#222;
+}
+
+.restart:hover{
+    transform:scale(1.03);
+}
+
+.disclaimer{
+    margin-top:20px;
+    color:#555;
+    font-size:11px;
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .countdown{
+        font-size:80px;
+    }
+
+    .year{
+        font-size:35px;
+    }
+
+    .futureEarth{
+        width:110px;
+        height:110px;
+    }
+
+    .result h1{
+        font-size:28px;
+    }
+
+    .resultCard p{
+        font-size:18px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+
+<section id="home" class="screen active">
+
+    <div class="home">
+
+        <small>PRIVATE SYSTEM</small>
+
+        <h1>UNKNOWN ACCESS</h1>
+
+        <button class="click" onclick="startSystem()">
+            CLICK ME
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- TERMINAL -->
+
+<section id="terminal" class="screen">
+
+    <div class="terminal">
+
+        <div id="terminalText"></div>
+
+        <span class="cursor"></span>
+
+    </div>
+
+</section>
+
+
+<!-- WARNING -->
+
+<section id="warning" class="screen">
+
+    <div class="warning">
+
+        <div class="icon">⚠️</div>
+
+        <h1>UNAUTHORIZED ACCESS DETECTED</h1>
+
+        <p>
+            An unknown session has been detected.<br>
+            System analysis is currently active.
+            <br><br>
+            DO NOT CLOSE THIS PAGE.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ANALYSIS -->
+
+<section id="analysis" class="screen">
+
+    <div class="analysis">
+
+        <h2 id="analysisText">
+            INITIALIZING...
+        </h2>
+
+        <div class="bar">
+            <span id="analysisBar"></span>
+        </div>
+
+        <div class="percent" id="analysisPercent">
+            0%
+        </div>
+
+        <div class="logs" id="analysisLogs"></div>
+
+    </div>
+
+</section>
+
+
+<!-- OPTIONS -->
+
+<section id="options" class="screen">
+
+    <div class="options">
+
+        <h1>
+            🔐 আপনার জন্য ২টি বিশেষ Option
+        </h1>
+
+        <p>
+            আপনার সম্পর্কে কিছু interesting information পাওয়া গেছে।
+        </p>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="emoji">🔮</div>
+
+                <h2>
+                    নিজের Future সম্পর্কে জেনে নিন
+                </h2>
+
+                <p>
+                    আপনার ভবিষ্যৎ সম্পর্কে জানতে এখানে প্রবেশ করুন।
+                </p>
+
+                <button onclick="openForm('future')">
+                    Future দেখুন 🔮
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="emoji">🧠</div>
+
+                <h2>
+                    আপনি কেমন তা দেখুন
+                </h2>
+
+                <p>
+                    আপনার personality সম্পর্কে জানতে এখানে প্রবেশ করুন।
+                </p>
+
+                <button onclick="openForm('personality')">
+                    আমি কেমন? 🧠
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- NAME FORM -->
+
+<section id="form" class="screen">
+
+    <div class="form">
+
+        <div class="emoji" id="formEmoji">
+            🔮
+        </div>
+
+        <h1 id="formTitle">
+            আপনার Future সম্পর্কে জানতে আপনার নাম লিখুন
+        </h1>
+
+        <p>
+            নাম লিখে নিচের button-এ click করুন...
+        </p>
+
+        <input
+            id="nameInput"
+            type="text"
+            placeholder="আপনার নাম লিখুন..."
+            autocomplete="off"
+        >
+
+        <button class="show" onclick="beginResult()">
+            দেখুন 🔍
+        </button>
+
+        <button class="back" onclick="showScreen('options')">
+            ← পিছনে যান
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- FUTURE TRAVEL -->
+
+<section id="futureTravel" class="screen">
+
+    <div class="space" id="space"></div>
+
+    <div class="tunnel"></div>
+    <div class="tunnel"></div>
+    <div class="tunnel"></div>
+
+    <div class="futureContent">
+
+        <div class="countdown" id="countdown">
+            3
+        </div>
+
+        <div class="travelText" id="travelText">
+            PREPARING TIME TRAVEL...
+        </div>
+
+        <div class="futureEarth"></div>
+
+        <div class="year" id="year">
+            YEAR: 2026
+        </div>
+
+        <div class="destination" id="destination">
+            🔮 FUTURE DESTINATION REACHED
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MIND SCAN -->
+
+<section id="mindScan" class="screen">
+
+    <div class="mind">
+
+        <div class="brain">
+            🧠
+        </div>
+
+        <div class="scanRing"></div>
+
+        <h2 id="mindText">
+            INITIALIZING MIND SCAN...
+        </h2>
+
+        <div class="mindPercent" id="mindPercent">
+            0%
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RESULT -->
+
+<section id="result" class="screen">
+
+    <div class="result">
+
+        <div class="resultTop">
+            ANALYSIS COMPLETE
+        </div>
+
+        <h1 id="resultTitle">
+            🔮 FUTURE ANALYSIS
+        </h1>
+
+        <div class="resultName" id="resultName"></div>
+
+        <div class="resultCard">
+
+            <div class="badge" id="resultBadge">
+                SECRET RESULT
+            </div>
+
+            <p id="resultText"></p>
+
+        </div>
+
+
+        <!-- NEW BUTTON AREA -->
+
+        <div class="resultButtons">
+
+            <button
+                class="optionBack"
+                onclick="showScreen('options')"
+            >
+                ← Options-এ ফিরে যান
+            </button>
+
+            <button
+                class="restart"
+                onclick="restart()"
+            >
+                🔄 আবার শুরু করুন
+            </button>
+
+        </div>
+
+
+        <div class="disclaimer">
+            This was only a fun prank simulation 😂
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* FRIEND DATA */
+
+const friends = {
+
+    ridoy:{
+        future:
+        "আপনি অনেক বড় হবেন ঠিকই, কিন্তু আপনি একটা পেত্নী বউ পাবেন 👻😂",
+
+        personality:
+        "আপনি নিজে কাজ খুঁজে পান না, কিন্তু আপনি সবাইকে কাজ করতে বলেন 😂"
+    },
+
+    saju:{
+        future:
+        "আপনার কপালে মেয়ে নাই, আর মেয়ে পেলেও আপনার রক্ত চুষে খাবে 🧛‍♀️😂",
+
+        personality:
+        "আপনি মেয়ে পাগল, মেয়েদের পিছে পিছে ঘুরেন 😂😭"
+    },
+
+    noyon:{
+        future:
+        "আপনি চোখ বন্ধ করলে যা দেখতে পান, সেটাই আপনার Future 👀😂",
+
+        personality:
+        "আপনি অনেক ভদ্র ছেলে 😇😂"
+    },
+
+    afrin:{
+        future:
+        "আপনি Future-এ একটা জামাই পাবেন অনেক কষ্টে, আপনি daily জামাইয়ের হাতে মার খাবেন 😂",
+
+        personality:
+        "আপনি অনেক সুন্দর, অনেক cute—সব মিছা কথা 😂 আপনি অনেক বুদ্ধিমান—এটাও মিছা কথা 😂 আসলে আপনি পাজি 😈"
+    },
+
+    santa:{
+        future:
+        "আপনি আপনার crush-কে কোনোদিনও পাবেন না 💔😂, আর আপনার জামাই পাবেন মোগা মার্কা 🤣",
+
+        personality:
+        "আপনি হলেন crush পাগল, ভন্ডি, আরও অনেক কিছু আছে—বললে কষ্ট পাবেন 😂😭"
+    },
+
+    rahat:{
+        future:
+        "আপনার কপালে কোনো মেয়ে নাই, আপনি একটা দজ্জাল বউ পাবেন যে আপনার রক্ত চুষে খাবে 👻🧛‍♀️😂",
+
+        personality:
+        "আপনি একটা মেয়ে পাগল, শুধু মেয়ের পিছে ঘুরেন আর মেয়েদের জ্বালান 😂🤣"
+    },
+
+    toza:{
+        future:
+        "ভাই, আপনার Future-এ কিছুই নাই—একদম সাদা ⚪😂, কিন্তু বউ পাবেন না—এটা confirm 🤣💀",
+
+        personality:
+        "আপনি ভালোও না, খারাপও না—একদম mix 😂🤷"
+    }
+
+};
+
+
+/* SCREEN CHANGE */
+
+function showScreen(id){
+
+    document
+    .querySelectorAll(".screen")
+    .forEach(s => s.classList.remove("active"));
+
+    document
+    .getElementById(id)
+    .classList.add("active");
+}
+
+
+/* START SYSTEM */
+
+function startSystem(){
+
+    showScreen("terminal");
+
+    const terminal =
+        document.getElementById("terminalText");
+
+    terminal.innerHTML = "";
+
+    const lines = [
+
+        "> Initializing private system...",
+
+        "> Establishing secure channel...",
+
+        "> Detecting active session...",
+
+        "> Checking system environment...",
+
+        "> Searching user profile...",
+
+        "> Encrypting session...",
+
+        "> Analyzing unknown identity...",
+
+        "> Secure layer detected...",
+
+        "> Processing...",
+
+        "> ACCESS CHANNEL READY."
+
+    ];
+
+    let i = 0;
+
+
+    function typeLine(){
+
+        if(i < lines.length){
+
+            terminal.innerHTML +=
+                lines[i] + "<br>";
+
+            i++;
+
+            setTimeout(typeLine,600);
+
+        }else{
+
+            setTimeout(() => {
+
+                showScreen("warning");
+
+                setTimeout(
+                    startAnalysis,
+                    3200
+                );
+
+            },1000);
+
+        }
+
+    }
+
+    typeLine();
+}
+
+
+/* ANALYSIS */
+
+function startAnalysis(){
+
+    showScreen("analysis");
+
+    const bar =
+        document.getElementById("analysisBar");
+
+    const percent =
+        document.getElementById("analysisPercent");
+
+    const text =
+        document.getElementById("analysisText");
+
+    const logs =
+        document.getElementById("analysisLogs");
+
+
+    const messages = [
+
+        "Checking user profile...",
+
+        "Analyzing behavior pattern...",
+
+        "Searching hidden information...",
+
+        "Generating personal analysis...",
+
+        "Preparing special access..."
+
+    ];
+
+
+    let p = 0;
+    let index = 0;
+
+
+    const timer = setInterval(() => {
+
+        p++;
+
+        bar.style.width = p + "%";
+
+        percent.innerText =
+            p + "%";
+
+
+        if(
+            p % 20 === 0 &&
+            index < messages.length
+        ){
+
+            text.innerText =
+                messages[index];
+
+            logs.innerHTML +=
+                "> " +
+                messages[index] +
+                "<br>";
+
+            index++;
+
+        }
+
+
+        if(p >= 100){
+
+            clearInterval(timer);
+
+            setTimeout(() => {
+
+                showScreen("options");
+
+            },1200);
+
+        }
+
+    },45);
+
+}
+
+
+/* SELECT OPTION */
+
+let selectedType = "future";
+
+
+function openForm(type){
+
+    selectedType = type;
+
+    document.getElementById(
+        "nameInput"
+    ).value = "";
+
+
+    if(type === "future"){
+
+        document.getElementById(
+            "formEmoji"
+        ).innerText = "🔮";
+
+        document.getElementById(
+            "formTitle"
+        ).innerText =
+            "আপনার Future সম্পর্কে জানতে আপনার নাম লিখুন";
+
+    }else{
+
+        document.getElementById(
+            "formEmoji"
+        ).innerText = "🧠";
+
+        document.getElementById(
+            "formTitle"
+        ).innerText =
+            "আপনি কেমন তা জানতে আপনার নাম লিখুন";
+
+    }
+
+
+    showScreen("form");
+
+
+    setTimeout(() => {
+
+        document
+        .getElementById("nameInput")
+        .focus();
+
+    },300);
+
+}
+
+
+/* CHECK NAME */
+
+function beginResult(){
+
+    const input =
+        document.getElementById("nameInput");
+
+    const name =
+        input.value.trim();
+
+
+    if(!name){
+
+        alert(
+            "আগে আপনার নাম লিখুন 😄"
+        );
+
+        input.focus();
+
+        return;
+    }
+
+
+    const key =
+        name.toLowerCase();
+
+
+    if(!friends[key]){
+
+        alert(
+            "😶 এই নামের কোনো secret profile পাওয়া যায়নি!\n\nনামটা ঠিকভাবে লিখে আবার চেষ্টা করুন 😂"
+        );
+
+        return;
+    }
+
+
+    if(selectedType === "future"){
+
+        startFutureTravel(
+            name,
+            key
+        );
+
+    }else{
+
+        startMindScan(
+            name,
+            key
+        );
+
+    }
+
+}
+
+
+/* FUTURE TRAVEL */
+
+function startFutureTravel(
+    name,
+    key
+){
+
+    showScreen("futureTravel");
+
+    createStars();
+
+
+    const countdown =
+        document.getElementById("countdown");
+
+    const travelText =
+        document.getElementById("travelText");
+
+    const year =
+        document.getElementById("year");
+
+    const destination =
+        document.getElementById("destination");
+
+
+    destination.style.display =
+        "none";
+
+
+    let count = 3;
+
+    countdown.innerText =
+        count;
+
+
+    const countTimer =
+        setInterval(() => {
+
+            count--;
+
+
+            if(count > 0){
+
+                countdown.innerText =
+                    count;
+
+            }else{
+
+                clearInterval(
+                    countTimer
+                );
+
+                countdown.innerText =
+                    "⚡";
+
+                travelText.innerText =
+                    "TIME TRAVEL INITIATED...";
+
+                startYears(
+                    name,
+                    key
+                );
+
+            }
+
+        },1000);
+
+}
+
+
+/* YEAR ANIMATION */
+
+function startYears(
+    name,
+    key
+){
+
+    const year =
+        document.getElementById("year");
+
+    const text =
+        document.getElementById("travelText");
+
+    const destination =
+        document.getElementById("destination");
+
+
+    const years = [
+
+        2026,
+        2028,
+        2031,
+        2035,
+        2040,
+        2047,
+        2055,
+        2065,
+        2078,
+        2090
+
+    ];
+
+
+    let i = 0;
+
+
+    const timer =
+        setInterval(() => {
+
+            year.innerText =
+                "YEAR: " +
+                years[i];
+
+            text.innerText =
+                "TRAVELLING THROUGH TIME...";
+
+            i++;
+
+
+            if(i >= years.length){
+
+                clearInterval(timer);
+
+
+                setTimeout(() => {
+
+                    year.innerText =
+                        "DESTINATION: FUTURE";
+
+                    text.innerText =
+                        "TIMELINE LOCKED";
+
+                    destination.style.display =
+                        "block";
+
+
+                    setTimeout(() => {
+
+                        showFutureResult(
+                            name,
+                            key
+                        );
+
+                    },2500);
+
+                },800);
+
+            }
+
+        },500);
+
+}
+
+
+/* STARS */
+
+function createStars(){
+
+    const space =
+        document.getElementById("space");
+
+    space.innerHTML = "";
+
+
+    for(let i=0;i<80;i++){
+
+        const star =
+            document.createElement("div");
+
+        star.className =
+            "star";
+
+        star.style.left =
+            Math.random()*100 + "%";
+
+        star.style.top =
+            Math.random()*100 + "%";
+
+        star.style.animationDelay =
+            Math.random()*1.2 + "s";
+
+
+        space.appendChild(star);
+
+    }
+
+}
+
+
+/* FUTURE RESULT */
+
+function showFutureResult(
+    name,
+    key
+){
+
+    document.getElementById(
+        "resultTitle"
+    ).innerText =
+        "🔮 FUTURE ANALYSIS";
+
+
+    document.getElementById(
+        "resultBadge"
+    ).innerText =
+        "FUTURE RESULT";
+
+
+    document.getElementById(
+        "resultName"
+    ).innerText =
+        "👤 " +
+        name.toUpperCase();
+
+
+    document.getElementById(
+        "resultText"
+    ).innerText =
+        friends[key].future;
+
+
+    showScreen("result");
+
+}
+
+
+/* PERSONALITY SCAN */
+
+function startMindScan(
+    name,
+    key
+){
+
+    showScreen("mindScan");
+
+
+    const percent =
+        document.getElementById(
+            "mindPercent"
+        );
+
+    const text =
+        document.getElementById(
+            "mindText"
+        );
+
+
+    const messages = [
+
+        "Scanning personality...",
+
+        "Reading behavior pattern...",
+
+        "Analyzing character...",
+
+        "Calculating hidden traits...",
+
+        "Finalizing personality..."
+
+    ];
+
+
+    let p = 0;
+    let index = 0;
+
+
+    const timer =
+        setInterval(() => {
+
+            p++;
+
+            percent.innerText =
+                p + "%";
+
+
+            if(
+                p % 20 === 0 &&
+                index < messages.length
+            ){
+
+                text.innerText =
+                    messages[index];
+
+                index++;
+
+            }
+
+
+            if(p >= 100){
+
+                clearInterval(timer);
+
+                text.innerText =
+                    "PERSONALITY ANALYSIS COMPLETE";
+
+
+                setTimeout(() => {
+
+                    document.getElementById(
+                        "resultTitle"
+                    ).innerText =
+                        "🧠 PERSONALITY ANALYSIS";
+
+
+                    document.getElementById(
+                        "resultBadge"
+                    ).innerText =
+                        "PERSONALITY RESULT";
+
+
+                    document.getElementById(
+                        "resultName"
+                    ).innerText =
+                        "👤 " +
+                        name.toUpperCase();
+
+
+                    document.getElementById(
+                        "resultText"
+                    ).innerText =
+                        friends[key].personality;
+
+
+                    showScreen("result");
+
+                },1800);
+
+            }
+
+        },50);
+
+}
+
+
+/* RESTART */
+
+function restart(){
+
+    document.getElementById(
+        "terminalText"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+        "analysisBar"
+    ).style.width = "0%";
+
+
+    document.getElementById(
+        "analysisPercent"
+    ).innerText = "0%";
+
+
+    document.getElementById(
+        "analysisLogs"
+    ).innerHTML = "";
+
+
+    showScreen("home");
+
+}
+
+
+/* ENTER KEY */
+
+document
+.getElementById("nameInput")
+.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key === "Enter"){
+
+            beginResult();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
